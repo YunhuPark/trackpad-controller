@@ -4,16 +4,7 @@ Turn your laptop trackpad into a MIDI / keyboard performance surface.
 
 ![Windows](https://img.shields.io/badge/Windows-10%2F11-blue) ![License](https://img.shields.io/badge/license-MIT-green)
 
-> **Platform:** Windows 10 / 11 only. Mac support is planned for a future release.
-
-## Platform Support
-
-| Platform | Status | 설치 파일 |
-|----------|--------|-----------|
-| Windows 10 / 11 (64-bit) | ✅ 지원 | `.exe` 인스톨러 제공 |
-| macOS | 🔜 예정 | 추후 `.dmg` 제공 예정 |
-
-> macOS용 `.dmg`는 현재 제공되지 않습니다. `.exe` 파일은 Windows 전용으로 Mac에서는 실행되지 않습니다.
+> **Windows 전용 앱입니다.** macOS는 자체 트랙패드 앱 생태계가 잘 갖춰져 있어, 이 프로젝트는 Windows 노트북 사용자를 위해 만들어졌습니다.
 
 ## Features
 
