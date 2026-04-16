@@ -4,6 +4,8 @@ Turn your laptop trackpad into a MIDI / keyboard performance surface.
 
 ![Windows](https://img.shields.io/badge/Windows-10%2F11-blue) ![License](https://img.shields.io/badge/license-MIT-green)
 
+> **Platform:** Windows 10 / 11 only. Mac support is planned for a future release.
+
 ## Features
 
 - **Zone Grid** — 2×2 / 3×3 / 4×4 touch zones, 4 independent layers
