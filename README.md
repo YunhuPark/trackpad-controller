@@ -6,6 +6,15 @@ Turn your laptop trackpad into a MIDI / keyboard performance surface.
 
 > **Platform:** Windows 10 / 11 only. Mac support is planned for a future release.
 
+## Platform Support
+
+| Platform | Status | 설치 파일 |
+|----------|--------|-----------|
+| Windows 10 / 11 (64-bit) | ✅ 지원 | `.exe` 인스톨러 제공 |
+| macOS | 🔜 예정 | 추후 `.dmg` 제공 예정 |
+
+> macOS용 `.dmg`는 현재 제공되지 않습니다. `.exe` 파일은 Windows 전용으로 Mac에서는 실행되지 않습니다.
+
 ## Features
 
 - **Zone Grid** — 2×2 / 3×3 / 4×4 touch zones, 4 independent layers
