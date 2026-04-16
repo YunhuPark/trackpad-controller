@@ -1,0 +1,21 @@
+{
+  "version": "1",
+  "grid": "2x2",
+  "bpm": 120,
+  "quantize": "off",
+  "noteRepeat": "off",
+  "zones": {
+    "1": [
+      { "id": "zone-0-0", "row": 0, "col": 0, "label": "Prev",  "color": "#6ca8f7", "action": { "type": "media", "mediaAction": "prev"     } },
+      { "id": "zone-0-1", "row": 0, "col": 1, "label": "Next",  "color": "#6ca8f7", "action": { "type": "media", "mediaAction": "next"     } },
+      { "id": "zone-1-0", "row": 1, "col": 0, "label": "Play",  "color": "#5ee7b4", "action": { "type": "media", "mediaAction": "play"     } },
+      { "id": "zone-1-1", "row": 1, "col": 1, "label": "Mute",  "color": "#f76c6c", "action": { "type": "media", "mediaAction": "mute"     } }
+    ]
+  },
+  "zoneLayouts": {
+    "1": {
+      "colWidths": [0.5, 0.5],
+      "rowHeights": [0.5, 0.5]
+    }
+  }
+}

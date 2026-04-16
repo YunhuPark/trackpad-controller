@@ -1,0 +1,26 @@
+{
+  "version": "1",
+  "grid": "3x3",
+  "bpm": 120,
+  "quantize": "1/16",
+  "noteRepeat": "off",
+  "zones": {
+    "1": [
+      { "id": "zone-0-0", "row": 0, "col": 0, "label": "Kick",  "color": "#f76c6c", "action": { "type": "midi", "midiNote": 36, "midiChannel": 10, "midiVelocity": 110 } },
+      { "id": "zone-0-1", "row": 0, "col": 1, "label": "Snare", "color": "#f7a066", "action": { "type": "midi", "midiNote": 38, "midiChannel": 10, "midiVelocity": 100 } },
+      { "id": "zone-0-2", "row": 0, "col": 2, "label": "Clap",  "color": "#f7d96c", "action": { "type": "midi", "midiNote": 39, "midiChannel": 10, "midiVelocity": 100 } },
+      { "id": "zone-1-0", "row": 1, "col": 0, "label": "HH-C",  "color": "#5ee7b4", "action": { "type": "midi", "midiNote": 42, "midiChannel": 10, "midiVelocity":  90 } },
+      { "id": "zone-1-1", "row": 1, "col": 1, "label": "HH-O",  "color": "#6cf7f7", "action": { "type": "midi", "midiNote": 46, "midiChannel": 10, "midiVelocity":  90 } },
+      { "id": "zone-1-2", "row": 1, "col": 2, "label": "Ride",  "color": "#6ca8f7", "action": { "type": "midi", "midiNote": 51, "midiChannel": 10, "midiVelocity":  85 } },
+      { "id": "zone-2-0", "row": 2, "col": 0, "label": "Tom1",  "color": "#7c6af7", "action": { "type": "midi", "midiNote": 45, "midiChannel": 10, "midiVelocity": 100 } },
+      { "id": "zone-2-1", "row": 2, "col": 1, "label": "Tom2",  "color": "#c46cf7", "action": { "type": "midi", "midiNote": 47, "midiChannel": 10, "midiVelocity": 100 } },
+      { "id": "zone-2-2", "row": 2, "col": 2, "label": "Crash", "color": "#f76c6c", "action": { "type": "midi", "midiNote": 49, "midiChannel": 10, "midiVelocity":  95 } }
+    ]
+  },
+  "zoneLayouts": {
+    "1": {
+      "colWidths": [0.3333, 0.3333, 0.3334],
+      "rowHeights": [0.3333, 0.3333, 0.3334]
+    }
+  }
+}

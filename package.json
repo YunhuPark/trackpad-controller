@@ -1,0 +1,86 @@
+{
+  "name": "trackpad-controller",
+  "version": "1.0.0",
+  "description": "Turn your laptop trackpad into a MIDI/keyboard performance surface",
+  "type": "module",
+  "main": "out/main/index.js",
+  "author": "TrackPad Controller",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node scripts/dev.cjs",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "build:native": "node-gyp rebuild --target=33.4.11 --arch=x64 --dist-url=https://electronjs.org/headers",
+    "build:win": "npm run build && electron-builder --win",
+    "build:mac": "npm run build && electron-builder --mac",
+    "lint": "eslint . --ext .ts,.tsx"
+  },
+  "dependencies": {
+    "midi": "^2.0.0",
+    "node-addon-api": "^8.7.0",
+    "node-hid": "^3.3.0",
+    "uiohook-napi": "^1.5.5",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "@electron-toolkit/preload": "^3.0.1",
+    "@electron-toolkit/utils": "^3.0.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.20",
+    "electron-builder": "^24.13.3",
+    "electron-vite": "^2.3.0",
+    "postcss": "^8.4.41",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.10",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.6"
+  },
+  "build": {
+    "appId": "com.trackpad.controller",
+    "productName": "TrackPad Controller",
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/midi/**",
+      "node_modules/uiohook-napi/**",
+      "node_modules/node-hid/**"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "extraResources": [
+      {
+        "from": "build/Release/touchpad.node",
+        "to": "touchpad.node"
+      }
+    ],
+    "files": [
+      "out/**/*",
+      "resources/**/*",
+      "build/**/*.node"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "resources/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerLanguages": ["en_US", "ko_KR"],
+      "language": "1042",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "TrackPad Controller"
+    }
+  }
+}

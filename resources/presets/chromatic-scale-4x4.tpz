@@ -1,0 +1,33 @@
+{
+  "version": "1",
+  "grid": "4x4",
+  "bpm": 120,
+  "quantize": "off",
+  "noteRepeat": "1/8",
+  "zones": {
+    "1": [
+      { "id": "zone-0-0", "row": 0, "col": 0, "label": "C3",  "color": "#7c6af7", "action": { "type": "midi", "midiNote": 48, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-0-1", "row": 0, "col": 1, "label": "C#3", "color": "#5ee7b4", "action": { "type": "midi", "midiNote": 49, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-0-2", "row": 0, "col": 2, "label": "D3",  "color": "#f7a066", "action": { "type": "midi", "midiNote": 50, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-0-3", "row": 0, "col": 3, "label": "D#3", "color": "#f76c6c", "action": { "type": "midi", "midiNote": 51, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-1-0", "row": 1, "col": 0, "label": "E3",  "color": "#6cf7f7", "action": { "type": "midi", "midiNote": 52, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-1-1", "row": 1, "col": 1, "label": "F3",  "color": "#f7d96c", "action": { "type": "midi", "midiNote": 53, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-1-2", "row": 1, "col": 2, "label": "F#3", "color": "#c46cf7", "action": { "type": "midi", "midiNote": 54, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-1-3", "row": 1, "col": 3, "label": "G3",  "color": "#6ca8f7", "action": { "type": "midi", "midiNote": 55, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-2-0", "row": 2, "col": 0, "label": "G#3", "color": "#7c6af7", "action": { "type": "midi", "midiNote": 56, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-2-1", "row": 2, "col": 1, "label": "A3",  "color": "#5ee7b4", "action": { "type": "midi", "midiNote": 57, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-2-2", "row": 2, "col": 2, "label": "A#3", "color": "#f7a066", "action": { "type": "midi", "midiNote": 58, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-2-3", "row": 2, "col": 3, "label": "B3",  "color": "#f76c6c", "action": { "type": "midi", "midiNote": 59, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-3-0", "row": 3, "col": 0, "label": "C4",  "color": "#6cf7f7", "action": { "type": "midi", "midiNote": 60, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-3-1", "row": 3, "col": 1, "label": "C#4", "color": "#f7d96c", "action": { "type": "midi", "midiNote": 61, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-3-2", "row": 3, "col": 2, "label": "D4",  "color": "#c46cf7", "action": { "type": "midi", "midiNote": 62, "midiChannel": 1, "midiVelocity": 100 } },
+      { "id": "zone-3-3", "row": 3, "col": 3, "label": "D#4", "color": "#6ca8f7", "action": { "type": "midi", "midiNote": 63, "midiChannel": 1, "midiVelocity": 100 } }
+    ]
+  },
+  "zoneLayouts": {
+    "1": {
+      "colWidths": [0.25, 0.25, 0.25, 0.25],
+      "rowHeights": [0.25, 0.25, 0.25, 0.25]
+    }
+  }
+}
