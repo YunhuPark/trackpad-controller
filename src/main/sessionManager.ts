@@ -69,7 +69,7 @@ export function initSessionManager() {
   // ── Built-in Preset List ──────────────────────────────────────
   ipcMain.handle('preset-list-builtin', () => {
     try {
-      const dir = !!process.env['ELECTRON_RENDERER_URL']
+      const dir = process.env['ELECTRON_RENDERER_URL']
         ? join(app.getAppPath(), 'resources', 'presets')
         : join(process.resourcesPath, 'presets')
       if (!existsSync(dir)) return []
@@ -84,7 +84,7 @@ export function initSessionManager() {
   // ── Built-in Preset Load ──────────────────────────────────────
   ipcMain.handle('preset-load-builtin', (_event, filename: string) => {
     try {
-      const dir = !!process.env['ELECTRON_RENDERER_URL']
+      const dir = process.env['ELECTRON_RENDERER_URL']
         ? join(app.getAppPath(), 'resources', 'presets')
         : join(process.resourcesPath, 'presets')
       const raw = readFileSync(join(dir, filename), 'utf-8')

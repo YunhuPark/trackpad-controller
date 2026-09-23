@@ -37,7 +37,7 @@ let lastY = -1
 let touchId = 0
 
 // native HID fallback 상태 (true = native HID 실패, uiohook 사용 중)
-let nativeHidFailed = false
+const nativeHidFailed = false
 
 export function initTouchpadInput(win: BrowserWindow) {
   try {

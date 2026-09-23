@@ -137,13 +137,13 @@ export default function ZonePad() {
 
   // 캘리브레이션 시작
   const startCalib = useCallback(() => {
-    ;(window as any).__padCalibState = { step: 0 }
+    (window as any).__padCalibState = { step: 0 }
     setCalibStep(1)
   }, [])
 
   // 캘리브레이션 취소 (Escape)
   const cancelCalib = useCallback(() => {
-    ;(window as any).__padCalibState = undefined
+    (window as any).__padCalibState = undefined
     setCalibStep(0)
   }, [])
 

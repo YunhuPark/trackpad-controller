@@ -122,7 +122,7 @@ export function useTouchpadInput(trigger: TriggerFn) {
 
       if (calibState !== undefined && type === 'down') {
         if (calibState.step === 0) {
-          ;(window as any).__padCalibState = { step: 1, p1: { x, y } }
+          (window as any).__padCalibState = { step: 1, p1: { x, y } }
           window.dispatchEvent(new CustomEvent('calib-step', { detail: { step: 1 } }))
         } else if (calibState.step === 1 && calibState.p1) {
           const p1 = calibState.p1
