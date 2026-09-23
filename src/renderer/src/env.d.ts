@@ -84,6 +84,9 @@ interface ElectronAPI {
   setInputConfig: (sensitivity: number, deadZone: number) => void
   setAbsPadMode: (enabled: boolean) => void
 
+  // MIDI Thru
+  setMidiThru: (enabled: boolean) => Promise<{ ok?: boolean; enabled?: boolean; error?: string }>
+
   // MIDI Export
   exportMidi: (data: number[]) => Promise<{ ok?: boolean; canceled?: boolean; error?: string }>
 
