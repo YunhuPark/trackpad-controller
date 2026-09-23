@@ -84,10 +84,11 @@ export function initMidiEngine(win: BrowserWindow) {
     learnActive = true
     if (!midiInput) {
       try {
-        midiInput = new midi.Input()
-        if (midiInput.getPortCount() === 0) { midiInput = null; return { error: 'No MIDI input' } }
-        midiInput.openPort(0)
-        midiInput.on('message', (_dt: number, msg: number[]) => {
+        const input = new midi.Input()
+        midiInput = input
+        if (input.getPortCount() === 0) { midiInput = null; return { error: 'No MIDI input' } }
+        input.openPort(0)
+        input.on('message', (_dt: number, msg: number[]) => {
           if (!learnActive) return
           const status = msg[0] & 0xF0
           if (status === 0x90 || status === 0xB0) {
@@ -178,18 +179,19 @@ export function initMidiEngine(win: BrowserWindow) {
 
     if (mode === 'slave') {
       try {
-        midiInput = new midi.Input()
-        const inputCount = midiInput.getPortCount()
+        const input = new midi.Input()
+        midiInput = input
+        const inputCount = input.getPortCount()
         if (inputCount === 0) {
           midiInput = null
           return { error: 'No MIDI input ports available for slave mode' }
         }
         // Open first available input port
-        midiInput.openPort(0)
+        input.openPort(0)
         slaveBeatCount = 0
         let lastClockTime = 0
 
-        midiInput.on('message', (_deltaTime: number, message: number[]) => {
+        input.on('message', (_deltaTime: number, message: number[]) => {
           const status = message[0]
           if (status === 0xF8) {
             // MIDI Clock pulse
@@ -232,11 +234,13 @@ export function initMidiEngine(win: BrowserWindow) {
     if (enabled && midi) {
       if (!midiInput) {
         try {
-          midiInput = new midi.Input()
-          if (midiInput.getPortCount() === 0) { midiInput = null; return { error: 'No MIDI input' } }
-          midiInput.openPort(0)
+          const input = new midi.Input()
+          midiInput = input
+          if (input.getPortCount() === 0) { midiInput = null; return { error: 'No MIDI input' } }
+          input.openPort(0)
         } catch (e) { return { error: String(e) } }
       }
+      if (!midiInput) return { error: 'No MIDI input' }
       midiInput.on('message', (_dt: number, msg: number[]) => {
         if (!thruActive || !midiOutput) return
         try { midiOutput.sendMessage(msg) } catch (_) {}
