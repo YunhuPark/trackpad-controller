@@ -14,5 +14,6 @@ declare module 'midi' {
 
   export class Input extends Port {
     on(event: 'message', listener: (deltaTime: number, message: number[]) => void): this
+    removeListener(event: 'message', listener: (deltaTime: number, message: number[]) => void): this
   }
 }

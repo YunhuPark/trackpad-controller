@@ -229,6 +229,10 @@ export function initMidiEngine(win: BrowserWindow) {
   // ── MIDI Thru ────────────────────────────────────────────────────
   // 외부 MIDI 입력 → 출력으로 그대로 전달
   let thruActive = false
+  // midiInput is shared with learn/slave mode, so re-enabling thru without
+  // going through the disabled branch must not stack a second forwarding
+  // listener on top of the first — track and remove our own listener first.
+  let thruListener: ((deltaTime: number, message: number[]) => void) | null = null
   ipcMain.handle('midi-thru-set', (_event, enabled: boolean) => {
     thruActive = enabled
     if (enabled && midi) {
@@ -241,17 +245,21 @@ export function initMidiEngine(win: BrowserWindow) {
         } catch (e) { return { error: String(e) } }
       }
       if (!midiInput) return { error: 'No MIDI input' }
-      midiInput.on('message', (_dt: number, msg: number[]) => {
+      if (thruListener) midiInput.removeListener('message', thruListener)
+      thruListener = (_dt: number, msg: number[]) => {
         if (!thruActive || !midiOutput) return
         try { midiOutput.sendMessage(msg) } catch (_) {}
-      })
+      }
+      midiInput.on('message', thruListener)
       return { ok: true, enabled: true }
     }
     // disabled: close thru input if not used by learn/slave
     if (!enabled && midiInput) {
+      if (thruListener) { try { midiInput.removeListener('message', thruListener) } catch (_) {} }
       try { midiInput.closePort() } catch (_) {}
       midiInput = null
     }
+    thruListener = null
     return { ok: true, enabled: false }
   })
 
