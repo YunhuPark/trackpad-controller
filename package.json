@@ -10,7 +10,7 @@
     "dev": "node scripts/dev.cjs",
     "build": "electron-vite build",
     "preview": "electron-vite preview",
-    "build:native": "node-gyp rebuild --target=33.4.11 --arch=x64 --dist-url=https://electronjs.org/headers",
+    "build:native": "node-gyp rebuild --target=45.3.2 --arch=x64 --dist-url=https://electronjs.org/headers",
     "build:win": "npm run build && electron-builder --win",
     "build:mac": "npm run build && electron-builder --mac",
     "lint": "eslint . --ext .ts,.tsx"
@@ -27,22 +27,22 @@
     "@electron-toolkit/utils": "^3.0.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
-    "@vitejs/plugin-react": "^4.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.72.2",
+    "@typescript-eslint/parser": "^8.72.2",
+    "@vitejs/plugin-react": "^6.3.0",
     "autoprefixer": "^10.4.20",
-    "electron": "^33.4.11",
-    "electron-builder": "^24.13.3",
-    "electron-vite": "^2.3.0",
+    "electron": "^45.3.2",
+    "electron-builder": "^26.18.0",
+    "electron-vite": "^6.0.0",
     "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "postcss": "^8.4.41",
+    "postcss": "^8.5.33",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.4",
-    "vite": "^5.4.6"
+    "vite": "^8.3.8"
   },
   "build": {
     "appId": "com.trackpad.controller",
@@ -90,5 +90,12 @@
       "createStartMenuShortcut": true,
       "shortcutName": "TrackPad Controller"
     }
+  },
+  "overrides": {
+    "postcss": "$postcss",
+    "minimatch@>=7.0.0 <11.0.1": "^11.0.8"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

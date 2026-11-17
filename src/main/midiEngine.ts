@@ -3,6 +3,10 @@
  * node-midi 기반 MIDI Note On/Off, 포트 관리, MIDI Clock 마스터/슬레이브
  */
 import { ipcMain, BrowserWindow } from 'electron'
+import { createRequire } from 'node:module'
+
+// Keep optional native addons lazy and preserve CommonJS plugin cache behavior in ESM.
+const loadModule = createRequire(import.meta.url)
 
 let midiOutput: InstanceType<typeof import('midi').Output> | null = null
 let midiInput: InstanceType<typeof import('midi').Input> | null = null
@@ -44,7 +48,7 @@ export function initMidiEngine(win: BrowserWindow) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let midi: any = null
   try {
-    midi = require('midi')
+    midi = loadModule('midi')
   } catch (e) {
     console.warn('[MIDI] midi package not available:', e)
   }

@@ -4,13 +4,17 @@
  * script: child_process.exec 기반 스크립트 실행
  */
 import { ipcMain } from 'electron'
+import { createRequire } from 'node:module'
+
+// Keep optional native addons lazy and preserve CommonJS plugin cache behavior in ESM.
+const loadModule = createRequire(import.meta.url)
 import { exec } from 'child_process'
 
 export function initKeyboardEngine() {
   ipcMain.handle('keyboard-send', async (_event, keys: string[]) => {
     try {
       // robotjs 우선 시도
-      const robot = require('robotjs')
+      const robot = loadModule('robotjs')
       const modifiers = keys.filter(k => ['control', 'alt', 'shift', 'command'].includes(k.toLowerCase()))
       const mainKey = keys.find(k => !['control', 'alt', 'shift', 'command', 'ctrl', 'cmd'].includes(k.toLowerCase()))
 
@@ -40,7 +44,7 @@ export function initKeyboardEngine() {
         continue
       }
       try {
-        const robot = require('robotjs')
+        const robot = loadModule('robotjs')
         const modifiers = step.keys.filter(k => ['control', 'alt', 'shift', 'command', 'ctrl', 'cmd'].includes(k.toLowerCase()))
         const mainKey = step.keys.find(k => !['control', 'alt', 'shift', 'command', 'ctrl', 'cmd'].includes(k.toLowerCase()))
         const robotMods = modifiers.map(m => (m === 'ctrl' ? 'control' : m === 'cmd' ? 'command' : m.toLowerCase()))
@@ -62,7 +66,7 @@ export function initKeyboardEngine() {
       volumeUp: 'audio_vol_up', volumeDown: 'audio_vol_down',
     }
     try {
-      const robot = require('robotjs')
+      const robot = loadModule('robotjs')
       const key = robotKeyMap[action]
       if (key) { robot.keyTap(key); return { ok: true } }
     } catch (_) {}

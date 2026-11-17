@@ -93,8 +93,8 @@ export default function ZonePad() {
   const dragRef = useRef<{ type: 'col' | 'row'; index: number } | null>(null)
 
   // 컬럼/행 divider 위치 계산
-  const colDividers = colWidths.slice(0, -1).reduce<number[]>((acc, w) => [...acc, (acc.at(-1) ?? 0) + w], [])
-  const rowDividers = rowHeights.slice(0, -1).reduce<number[]>((acc, h) => [...acc, (acc.at(-1) ?? 0) + h], [])
+  const colDividers = colWidths.slice(0, -1).reduce<number[]>((acc, w) => [...acc, (acc[acc.length - 1] ?? 0) + w], [])
+  const rowDividers = rowHeights.slice(0, -1).reduce<number[]>((acc, h) => [...acc, (acc[acc.length - 1] ?? 0) + h], [])
 
   // 실제 터치패드 IPC 이벤트 연결 (pressure 포함)
   useTouchpadInput(triggerWithRecord)

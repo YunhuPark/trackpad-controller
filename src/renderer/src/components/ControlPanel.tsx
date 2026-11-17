@@ -106,6 +106,11 @@ export default function ControlPanel() {
   const handleImportPreset = async () => {
     const result = await window.electronAPI?.importPreset?.()
     if (!result || result.canceled || result.error) return
+    if (result.disabledActions) {
+      window.alert(locale === 'ko'
+        ? `가져온 프리셋의 실행 동작 ${result.disabledActions}개를 비활성화했습니다. 실행하려면 내용을 확인한 후 존 편집기에서 직접 설정하세요.`
+        : `Disabled ${result.disabledActions} imported executable actions. Review and configure them manually in the zone editor to enable execution.`)
+    }
     const preset = result.preset as {
       grid?: GridSize
       zones?: typeof zones
