@@ -100,7 +100,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   // Preset (.tpz)
   exportPreset: (data: unknown) => ipcRenderer.invoke('preset-export', data),
-  importPreset: (): Promise<{ ok?: boolean; preset?: unknown; canceled?: boolean; error?: string; disabledScripts?: number }> =>
+  importPreset: (): Promise<{ ok?: boolean; preset?: unknown; canceled?: boolean; error?: string; disabledActions?: number }> =>
     ipcRenderer.invoke('preset-import'),
   listBuiltinPresets: (): Promise<Array<{ name: string; file: string }>> =>
     ipcRenderer.invoke('preset-list-builtin'),

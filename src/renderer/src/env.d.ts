@@ -64,7 +64,7 @@ interface ElectronAPI {
 
   // Preset (.tpz)
   exportPreset: (data: unknown) => Promise<{ ok?: boolean; filePath?: string; canceled?: boolean; error?: string }>
-  importPreset: () => Promise<{ ok?: boolean; preset?: unknown; canceled?: boolean; error?: string; disabledScripts?: number }>
+  importPreset: () => Promise<{ ok?: boolean; preset?: unknown; canceled?: boolean; error?: string; disabledActions?: number }>
   listBuiltinPresets: () => Promise<Array<{ name: string; file: string }>>
   loadBuiltinPreset: (filename: string) => Promise<{ ok?: boolean; preset?: unknown; error?: string }>
 

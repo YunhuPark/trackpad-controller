@@ -62,19 +62,22 @@ export function initSessionManager() {
       const preset = JSON.parse(raw)
       // A shared preset is data, not permission to execute shell commands.
       // Re-enable only by deliberately editing the action in the local UI.
-      let disabledScripts = 0
+      const passiveActions = new Set(['none', 'midi', 'chord', 'cc', 'media'])
+      let disabledActions = 0
       if (preset && typeof preset === 'object' && preset.zones && typeof preset.zones === 'object') {
         for (const zones of Object.values(preset.zones)) {
           if (!Array.isArray(zones)) continue
           for (const zone of zones) {
-            if (zone?.action?.type === 'script') {
+            // Keyboard sequences, plugins and remote control actions can execute
+            // commands too. Unknown future action classes must also fail closed.
+            if (zone?.action && !passiveActions.has(zone.action.type)) {
               zone.action = { type: 'none' }
-              disabledScripts++
+              disabledActions++
             }
           }
         }
       }
-      return { ok: true, preset, disabledScripts }
+      return { ok: true, preset, disabledActions }
     } catch (e) {
       return { error: String(e) }
     }
