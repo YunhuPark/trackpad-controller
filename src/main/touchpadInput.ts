@@ -13,6 +13,10 @@
  *   - 캘리브레이션으로 정확도 향상 가능
  */
 import { BrowserWindow, ipcMain, screen, app } from 'electron'
+import { createRequire } from 'node:module'
+
+// Keep optional native addons lazy and preserve CommonJS plugin cache behavior in ESM.
+const loadModule = createRequire(import.meta.url)
 import { join } from 'path'
 
 export interface TouchEvent {
@@ -84,7 +88,7 @@ export function initTouchpadInput(win: BrowserWindow) {
   // ── uiohook-napi ────────────────────────────────────────────────
   function startUiohookHandlers() {
     try {
-      const { uiohook, UiohookMouseButton } = require('uiohook-napi')
+      const { uiohook, UiohookMouseButton } = loadModule('uiohook-napi')
 
       uiohook.on('mousedown', (e: { button: number; x: number; y: number }) => {
         if (e.button !== UiohookMouseButton.LEFT) return
@@ -112,7 +116,7 @@ export function initTouchpadInput(win: BrowserWindow) {
         if (!touchActive) return
 
         if (absPadMode && !nativeHidFailed) {
-          try { require('robotjs').moveMouse(lockX, lockY) } catch (_) {}
+          try { loadModule('robotjs').moveMouse(lockX, lockY) } catch (_) {}
         }
 
         if (!uiohookEventEnabled) return
@@ -135,7 +139,7 @@ export function initTouchpadInput(win: BrowserWindow) {
         touchActive = false
 
         if (absPadMode && !nativeHidFailed) {
-          try { require('robotjs').moveMouse(lockX, lockY) } catch (_) {}
+          try { loadModule('robotjs').moveMouse(lockX, lockY) } catch (_) {}
         }
 
         if (!uiohookEventEnabled) return
@@ -162,7 +166,7 @@ export function initTouchpadInput(win: BrowserWindow) {
       : join(app.getAppPath(), 'build', 'Release', 'touchpad.node')
 
     console.log(`[Touchpad] Loading native addon: ${nativePath}`)
-    const nm = require(nativePath)
+    const nm = loadModule(nativePath)
 
     nm.start((event: TouchEvent) => {
       if (!nativeEventsEnabled) return  // ABS 모드 OFF 시 native 이벤트 무시
@@ -255,7 +259,7 @@ export function initTouchpadInput(win: BrowserWindow) {
 export function cleanupTouchpad() {
   const nm = (global as any).__nativeTouchpad
   if (nm) { try { nm.stop() } catch (_) {} }
-  try { require('uiohook-napi').uiohook.stop() } catch (_) {}
+  try { loadModule('uiohook-napi').uiohook.stop() } catch (_) {}
 }
 
 function normalize(x: number, y: number) {

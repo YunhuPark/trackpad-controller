@@ -60,7 +60,21 @@ export function initSessionManager() {
       if (canceled || filePaths.length === 0) return { canceled: true }
       const raw = readFileSync(filePaths[0], 'utf-8')
       const preset = JSON.parse(raw)
-      return { ok: true, preset }
+      // A shared preset is data, not permission to execute shell commands.
+      // Re-enable only by deliberately editing the action in the local UI.
+      let disabledScripts = 0
+      if (preset && typeof preset === 'object' && preset.zones && typeof preset.zones === 'object') {
+        for (const zones of Object.values(preset.zones)) {
+          if (!Array.isArray(zones)) continue
+          for (const zone of zones) {
+            if (zone?.action?.type === 'script') {
+              zone.action = { type: 'none' }
+              disabledScripts++
+            }
+          }
+        }
+      }
+      return { ok: true, preset, disabledScripts }
     } catch (e) {
       return { error: String(e) }
     }

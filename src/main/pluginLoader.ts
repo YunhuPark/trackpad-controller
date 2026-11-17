@@ -21,6 +21,10 @@
  * ```
  */
 import { ipcMain, app, BrowserWindow, shell } from 'electron'
+import { createRequire } from 'node:module'
+
+// Keep optional native addons lazy and preserve CommonJS plugin cache behavior in ESM.
+const loadModule = createRequire(import.meta.url)
 import { join } from 'path'
 import { readdirSync, existsSync, mkdirSync } from 'fs'
 
@@ -60,8 +64,8 @@ function ensurePluginsDir() {
 function loadPlugin(filePath: string): Plugin | null {
   try {
     // Clear require cache to allow hot-reload
-    delete require.cache[require.resolve(filePath)]
-    const mod = require(filePath)
+    delete loadModule.cache[loadModule.resolve(filePath)]
+    const mod = loadModule(filePath)
     if (!mod || typeof mod !== 'object' || !mod.name || !Array.isArray(mod.actions)) {
       console.warn('[Plugin] Invalid plugin format:', filePath)
       return null
