@@ -30,6 +30,33 @@ const installer = fs.readFileSync(path.join(output, binaries[0]));
 const nativePath = path.join(root, 'release/win-unpacked/resources/touchpad.node');
 assert.ok(fs.statSync(nativePath).size > 0, 'rebuilt native touchpad module must be packaged');
 assert.deepEqual(fs.readFileSync(nativePath), fs.readFileSync(path.join(root, 'build/Release/touchpad.node')));
+// Load modules under the packaged Electron ABI on the CI runner. Do not call
+// start(), enumerate devices, open ports, or launch the application/installer.
+const nativeCheck = child.spawnSync(path.join(output, 'win-unpacked', 'TrackPad Controller.exe'), ['-e', `
+  const assert = require('node:assert/strict');
+  const path = require('node:path');
+  const base = process.env.TRACKPAD_PACKAGE_ROOT;
+  assert.equal(process.versions.electron, process.env.TRACKPAD_EXPECTED_ELECTRON);
+  const touchpad = require(path.join(base, 'resources', 'touchpad.node'));
+  assert.equal(typeof touchpad.start, 'function');
+  assert.equal(typeof touchpad.stop, 'function');
+  const modules = path.join(base, 'resources', 'app.asar', 'node_modules');
+  const midi = require(path.join(modules, 'midi'));
+  assert.equal(typeof midi.Input, 'function');
+  assert.equal(typeof midi.Output, 'function');
+  const hid = require(path.join(modules, 'node-hid'));
+  assert.equal(typeof hid.devices, 'function');
+  const hook = require(path.join(modules, 'uiohook-napi'));
+  assert.equal(typeof hook.uIOhook.start, 'function');
+  console.log('Packaged native modules load; no hooks started or devices opened.');
+`], {
+  env: { ...process.env, ELECTRON_RUN_AS_NODE: '1', TRACKPAD_PACKAGE_ROOT: path.join(output, 'win-unpacked'), TRACKPAD_EXPECTED_ELECTRON: require('electron/package.json').version },
+  encoding: 'utf8',
+  timeout: 30000,
+});
+process.stdout.write(nativeCheck.stdout || '');
+if (nativeCheck.status !== 0) process.stderr.write(nativeCheck.stderr || '');
+assert.equal(nativeCheck.status, 0, 'packaged native modules must load under the packaged Electron runtime');
 const result = {
   version: packageInfo.version,
   electronVersion: require('electron/package.json').version,
@@ -40,6 +67,8 @@ const result = {
   packagedMainMatchesBuiltSource: true,
   packagedPresetQuarantinePassed: true,
   nativeTouchpadMatchesRebuild: true,
+  nativeModulesLoadUnderPackagedElectron: true,
+  hooksStartedDuringVerification: false,
   installerExecuted: false,
   hardwareValidated: false,
   codeSigningConfigured: false,
