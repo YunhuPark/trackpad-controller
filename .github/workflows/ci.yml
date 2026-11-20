@@ -36,6 +36,17 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
       - name: Verify packaged application contents
         run: node scripts/verify-windows-package.cjs
+      - name: Install, exercise and uninstall on disposable Windows runner
+        run: node scripts/smoke-installed-windows.cjs
+      - name: Upload installed application smoke evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: windows-installed-smoke
+          path: release/installed-smoke/
+          if-no-files-found: ignore
+          include-hidden-files: false
+          retention-days: 7
       - name: Upload reviewed installer for release inspection
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
