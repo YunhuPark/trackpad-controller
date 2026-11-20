@@ -1,6 +1,6 @@
 {
   "name": "trackpad-controller",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Turn your laptop trackpad into a MIDI/keyboard performance surface",
   "type": "module",
   "main": "out/main/index.js",

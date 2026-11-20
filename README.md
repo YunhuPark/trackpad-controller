@@ -33,6 +33,19 @@ Turn your laptop trackpad into a MIDI / keyboard performance surface.
 2. Run the installer
 3. Launch **TrackPad Controller** from the Start menu or desktop shortcut
 
+### Security update: 1.0.1
+
+The original 1.0.0 installer predates the preset import security fix and has been
+withdrawn from public downloads. Use 1.0.1 or later. Importing a shared preset now
+disables executable actions, including scripts, keyboard sequences, plugins,
+webhooks and OSC; local actions must be deliberately configured in the UI.
+Previously installed copies are not updated by a source-code change on GitHub.
+
+Windows packages are rebuilt in CI and their actual packaged main-process bundle
+is checked for this import boundary. Release checksums verify downloaded bytes;
+they do not replace an Authenticode signature. Physical touchpad/MIDI hardware and
+an interactive installer session are not covered by the package checks.
+
 ## Quick Start
 
 1. Open the app — the trackpad grid appears in the center
