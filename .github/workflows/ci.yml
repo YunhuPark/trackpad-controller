@@ -11,16 +11,38 @@ permissions:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2025
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run lint
       - run: npx tsc --noEmit
       - run: npx tsc --noEmit -p tsconfig.node.json
+      - name: Build application bundles
+        run: npm run build
+      - name: Source and compiled security regression tests
+        run: node --test tests/*.test.cjs
+      - name: Rebuild touchpad native module for the pinned Electron runtime
+        run: npm run build:native
+      - name: Package Windows installer without publishing
+        run: npx --no-install electron-builder --win --x64 --publish never
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - name: Verify packaged application contents
+        run: node scripts/verify-windows-package.cjs
+      - name: Upload reviewed installer for release inspection
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: windows-installer
+          path: |
+            release/*.exe
+            release/package-verification.json
+          if-no-files-found: error
+          include-hidden-files: false
+          retention-days: 7
