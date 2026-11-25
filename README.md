@@ -30,7 +30,7 @@ Turn your laptop trackpad into a MIDI / keyboard performance surface.
 ## Installation
 
 1. Download `TrackPad-Controller-Setup-x.x.x.exe` from [Releases](../../releases)
-2. Run the installer
+2. Verify the downloaded installer as described below, then run it
 3. Launch **TrackPad Controller** from the Start menu or desktop shortcut
 
 ### Security update: 1.0.1
@@ -45,6 +45,39 @@ Windows packages are rebuilt in CI and their actual packaged main-process bundle
 is checked for this import boundary. Release checksums verify downloaded bytes;
 they do not replace an Authenticode signature. Physical touchpad/MIDI hardware and
 an interactive installer session are not covered by the package checks.
+
+### Verify the origin of 1.0.2 and later downloads
+
+Official Windows installers from 1.0.2 carry a GitHub artifact attestation.
+The signature binds the downloaded bytes to this repository's CI workflow,
+the `master` ref and a specific source commit. The signing job runs only after
+the Windows build, packaged security checks and installed-app smoke test pass
+on a push to this repository's `master`; it never signs pull-request builds.
+
+Before running the installer, install the [GitHub CLI](https://cli.github.com/)
+and run this command in PowerShell (replace the filename and the full commit
+SHA with the values for your release):
+
+```powershell
+gh attestation verify '.\TrackPad.Controller.Setup.1.0.2.exe' `
+  --repo YunhuPark/trackpad-controller `
+  --signer-workflow YunhuPark/trackpad-controller/.github/workflows/ci.yml `
+  --source-ref refs/heads/master `
+  --source-digest '<full source commit SHA from the release>' `
+  --deny-self-hosted-runners
+```
+
+Use the exact source commit in the release notes and compare it with the release
+tag in the repository. Verification must succeed before you execute the file;
+a missing attestation, a modified file or a mismatched source commit must fail.
+The default verifier also checks the SLSA build-provenance predicate and GitHub's
+OIDC issuer. Do not accept a proof scoped only to an arbitrary repository owner.
+Version 1.0.1 does not have this attestation; its existing checksum is preserved.
+
+This is a free build-origin and integrity check, **not an Authenticode publisher
+signature**. Windows SmartScreen may still warn. It does not prove the program
+has no vulnerabilities or validate physical touchpad/MIDI hardware. The release
+remains a preview; do not disable Windows security controls to install it.
 
 ## Quick Start
 

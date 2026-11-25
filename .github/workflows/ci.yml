@@ -48,6 +48,7 @@ jobs:
           include-hidden-files: false
           retention-days: 7
       - name: Upload reviewed installer for release inspection
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: windows-installer
@@ -56,4 +57,25 @@ jobs:
             release/package-verification.json
           if-no-files-found: error
           include-hidden-files: false
-          retention-days: 7
+          retention-days: 1
+
+  attest:
+    # PR code never receives signing credentials. Only attest the installer
+    # produced by the successful build job in this exact trusted push run.
+    if: github.repository == 'YunhuPark/trackpad-controller' && github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - name: Download the verified installer from this workflow run
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: windows-installer
+          path: release
+      - name: Attest the exact installer bytes without a long-lived signing key
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-path: release/*.exe
